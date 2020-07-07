@@ -21,10 +21,10 @@
                             <div class="channel-avatar">
                                 @if($channel->editable())
                                 <div onclick="document.getElementById('image').click()" class="channel-avatar-overlay">
-                                    <img src='https://cdn1.iconfinder.com/data/icons/facebook-ui/48/additional_icons-03-512.png' width="70%" title='JavaScript' />
+                                    <img src='https://cdn1.iconfinder.com/data/icons/facebook-ui/48/additional_icons-03-512.png' width="70%" title='Channel Uploda' />
                                 </div>
                                 @endif
-                                <img src="{{ $channel->image() }}" alt="">
+                                <img src="{{ $channel->image() }}" alt="Channel Icon" title="{{ $channel->name }}">
                             </div>
                         </div>
 
@@ -34,11 +34,7 @@
                                     {{ $channel->description }}
                                 </p>
                                 <div class="text-center">
-                                    <subscribe-button :channel="{{ $channel }}" :initial-subscriptions="{{$channel->subscriptions}}" inline-template>
-                                        <button @click="toggleSubscription" class="btn btn-danger">
-                                            @{{ owner ? '' : subscribed ? 'Unfollow' : 'Follow' }} @{{ count }} @{{ owner ? 'Followers' : '' }}
-                                        </button>
-                                    </subscribe-button>
+                                    <subscribe-button :channel="{{ $channel }}" :initial-subscriptions="{{$channel->subscriptions}}" />
                                 </div>
 
                         </div>
