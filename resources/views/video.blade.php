@@ -40,10 +40,7 @@
                             {{ $video->views }} {{ str_plural('view',$video->views) }}
                         </div>
 
-                        <div>
-                            <a class="btn btn-sm btn-primary" href="">11k Like</a>
-                            <a class="btn btn-sm btn-secondary" href="">25 Dislike</a>
-                        </div>
+                        <votes :default_votes='{{ $video->votes }}' entity_owner="{{ $video->channel->user_id }}"></votes>
                       </div>
 
                         <hr>
@@ -104,16 +101,16 @@
         .vjs-default-skin {
             width: 100%;
         }
-        .thumbs-up, .thumbs-down {
-            width: 20px;
-            height: 20px;
+        .like, .dislike {
+            width: 25px;
+            height: 25px;
             cursor: pointer;
             fill: currentColor;
         }
-        .thumbs-down-active, .thumbs-up-active {
-            color: #3EA6FF;
+        .dislike-active, .like-active {
+            color: #ff3e3e;
         }
-        .thumbs-down {
+        .dislike {
             margin-left: 1rem;
         }
     </style>
