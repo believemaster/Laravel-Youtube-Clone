@@ -7,57 +7,80 @@
             <div class="card">
                 <div class="card-header">{{ $video->title }}</div>
 
-                <div class="card-body">
-                    <video
-                    id="video"
-                    class="video-js vjs-theme-city"
-                    controls
-                    preload="auto"
-                    width="690"
-                    height="375"
-                    poster="{{ $video->thumbnail }}"
-                    data-setup="{}"
-                  >
-                    <source src='{{ asset(Storage::url("videos/{$video->id}/{$video->id}.m3u8")) }}' type="application/x-mpegURL" />
-                  </video>
+                @if ($video->editable())
+                <form class="" action="{{ route('videos.update', $video->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                @endif
 
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mt-3">
-                            {{ $video->title }}
-                        </h4>
-                        {{ $video->views }} {{ str_plural('view',$video->views) }}
-                    </div>
 
-                    <div>
-                        <a class="btn btn-info" href="">11k Like</a>
-                        <a class="btn btn-warning" href="">25 Dislike</a>
-                    </div>
-                </div>
+                    <div class="card-body">
+                        <video
+                        id="video"
+                        class="video-js vjs-theme-city"
+                        controls
+                        preload="auto"
+                        width="690"
+                        height="375"
+                        poster="{{ $video->thumbnail }}"
+                        data-setup="{}"
+                      >
+                        <source src='{{ asset(Storage::url("videos/{$video->id}/{$video->id}.m3u8")) }}' type="application/x-mpegURL" />
+                      </video>
 
-                <hr>
-
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, ullam a repellendus quam distinctio asperiores ad assumenda dolorem voluptas consequatur.
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center mt-5">
-                    <div class="media">
-                        <img class="rounded-circle" src="https://picsum.photos/id/42/200/200" width="50" height="50" class="mr-3" alt="...">
-                        <div class="media-body ml-2">
-                            <h5 class="mt-0 mb-0">
-                                {{ $video->channel->name }}
-                            </h5>
-                            <span class="small">Published on {{ $video->created_at->toFormattedDateString() }}</span>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mt-3">
+                                @if ($video->editable())
+                                    <input type="text" class="form-control" value="{{ $video->title }}" name="title">
+                                @else
+                                    {{ $video->title }}
+                                @endif
+                            </h4>
+                            {{ $video->views }} {{ str_plural('view',$video->views) }}
                         </div>
+
+                        <div>
+                            <a class="btn btn-sm btn-primary" href="">11k Like</a>
+                            <a class="btn btn-sm btn-secondary" href="">25 Dislike</a>
+                        </div>
+                      </div>
+
+                        <hr>
+
+                        <div>
+                            @if ($video->editable())
+                                <textarea name="description" id="" cols="3" rows="3" class="form-control">{{ $video->description }}</textarea>
+                                <div class="text-right mt-4">
+                                    <button type="submit" class="btn btn-sm btn-outline-info">Update Details</button>
+                                </div>
+                            @else
+                                {{ $video->description }}
+                            @endif
+
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="media">
+                                <img class="rounded-circle" src="https://picsum.photos/id/42/200/200" width="50" height="50" class="mr-3" alt="...">
+                                <div class="media-body ml-2">
+                                    <h5 class="mt-0 mb-0">
+                                        {{ $video->channel->name }}
+                                    </h5>
+                                    <span class="small">Published on {{ $video->created_at->toFormattedDateString() }}</span>
+                                </div>
+                            </div>
+
+                            <subscribe-button :channel="{{ $video->channel }}" :initial-subscriptions="{{ $video->channel->subscriptions }}" />
+                        </div>
+
                     </div>
+                @if ($video->editable())
+                </form>
+                @endif
 
-                    <subscribe-button :channel="{{ $video->channel }}" :initial-subscriptions="{{ $video->channel->subscriptions }}" />
-                </div>
-
-                </div>
             </div>
         </div>
     </div>
