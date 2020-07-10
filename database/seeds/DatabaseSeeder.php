@@ -1,7 +1,9 @@
 <?php
 
 use App\Channel;
+use App\Comment;
 use App\Subscription;
+use App\Video;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -44,6 +46,21 @@ class DatabaseSeeder extends Seeder
 
         factory(Subscription::class, 100)->create([
             'channel_id' => $channel2->id
+        ]);
+
+        $video = factory(Video::class)->create([
+            'channel_id' => $channel1->id
+        ]);
+
+        factory(Comment::class, 20)->create([
+            'video_id' => $video->id
+        ]);
+
+        $comment = Comment::first();
+
+        factory(Comment::class, 10)->create([
+            'video_id' => $video->id,
+            'comment_id' => $comment->id,
         ]);
     }
 }
