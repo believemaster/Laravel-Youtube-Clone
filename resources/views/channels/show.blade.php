@@ -81,7 +81,7 @@
                             <th>Title</th>
                             <th>Views</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
                         </thead>
                         <tbody>
                             @foreach ($videos as $video)
@@ -96,11 +96,11 @@
                                         {{ $video->views }}
                                     </td>
                                     <td>
-                                        {{ $video->percentage ? '<span class="badge badge">Live' : 'Processing' }}
+                                        {{ $video->percentage ? 'Live' : 'Processing' }}
                                     </td>
                                     <td>
                                         @if ($video->percentage === 100)
-                                            <a href="{{ route('videos.show', $video->id) }}" class="btn btn-sm btn-info">
+                                            <a href="{{ route('videos.show', $video->id) }}" class="badge badge-primary">
                                                 View
                                             </a>
                                         @endif

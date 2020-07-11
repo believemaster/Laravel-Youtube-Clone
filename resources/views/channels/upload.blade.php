@@ -28,8 +28,8 @@
                             </div>
 
                             <div class="col-md-4">
-                                <a v-if="video.percentage && video.percentage === 100" target="_blank" :href="`/videos/${video.id}`">
-                                    @{{ video.title }}
+                                <a v-if="video.percentage && video.percentage === 100" target="_blank" :href="`/videos/${video.id}`" class="btn btn-sm btn-info">
+                                    Click to view & add info - @{{ video.title }}
                                 </a>
                                 <h4 v-else class="text-center">
                                     @{{ video.title || video.name }}
