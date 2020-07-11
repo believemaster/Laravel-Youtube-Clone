@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Channel;
 use App\Video;
 use Faker\Generator as Faker;
 
