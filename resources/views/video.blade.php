@@ -111,6 +111,8 @@
         }
         .dislike-active, .like-active {
             color: #ff3e3e;
+            width: 2.3rem;
+            height: 2.3rem;
         }
         .dislike {
             margin-left: 1rem;
