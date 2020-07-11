@@ -101,7 +101,7 @@ export default {
       }
 
       if (__auth().id === this.entity_owner) {
-        return alert("We guess! This is your own video");
+        return alert("We guess! You own this, Let Others Do That Job.");
       }
 
       if (type === "up" && this.upvoted) return;

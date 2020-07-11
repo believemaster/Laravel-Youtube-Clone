@@ -1,27 +1,27 @@
 <template>
   <div class="card mt-5 p-5">
-    <div class="form-inline my-4 w-full">
-      <input type="text" class="form-control form-control-sm w-80" />
-      <button class="btn btn-sm btn-primary">
+    <div v-if="auth" class="form-inline my-4 w-full">
+      <input
+        v-model="newComment"
+        type="text"
+        class="form-control form-control-sm w-80"
+        placeholder="Add new comment..."
+      />
+      <button @click="addComment" class="btn btn-sm btn-primary">
         <small>Add comment</small>
       </button>
     </div>
-    <div class="media my-3" v-for="comment in comments.data">
-      <avatar :username="comment.user.name" class="mr-3" :size="30"></avatar>
-
-      <div class="media-body">
-        <h6 class="mt-0">{{ comment.user.name }}</h6>
-        <small>{{ comment.body }}</small>
-
-        <votes
-          :default_votes="comment.votes"
-          :entity_id="comment.id"
-          :entity_owner="comment.user.id"
-        ></votes>
-
-        <replies :comment="comment"></replies>
-      </div>
+    <div v-else class="form-inline my-4 w-full">
+      <input
+        type="text"
+        class="form-control form-control-sm w-80"
+        placeholder="Login to add new comment..."
+      />
+      <button class="btn btn-sm btn-primary disabled">
+        <small>Add comment</small>
+      </button>
     </div>
+    <comment v-for="comment in comments.data" :key="comment.id" :comment="comment" />
 
     <div class="text-center mt-2">
       <button
@@ -35,23 +35,28 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import Replies from "./replies";
+import Comment from "./comment";
 
 export default {
   props: ["video"],
 
   components: {
-    Avatar,
-    Replies
+    Comment
   },
   mounted() {
     this.fetchComments();
   },
+
+  computed: {
+    auth() {
+      return __auth();
+    }
+  },
   data: () => ({
     comments: {
       data: []
-    }
+    },
+    newComment: ""
   }),
   methods: {
     fetchComments() {
@@ -64,6 +69,20 @@ export default {
           data: [...this.comments.data, ...data.data]
         };
       });
+    },
+    addComment() {
+      if (!this.newComment) return;
+
+      axios
+        .post(`/comments/${this.video.id}`, {
+          body: this.newComment
+        })
+        .then(({ data }) => {
+          this.comments = {
+            ...this.comments,
+            data: [data, ...this.comments.data]
+          };
+        });
     }
   }
 };
