@@ -26,7 +26,7 @@ class UpdateChannelRequest extends FormRequest
         return [
             'name' => 'required',
             'image' => 'image',
-            'description' => 'max:100'
+            'description' => 'max:1000'
         ];
     }
 }

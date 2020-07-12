@@ -35,7 +35,8 @@ class Channel extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->width(100)
-            ->height(100);
+            ->height(100)
+            ->nonQueued();
     }
 
     public function subscriptions()

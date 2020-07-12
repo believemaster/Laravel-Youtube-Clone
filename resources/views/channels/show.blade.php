@@ -24,7 +24,7 @@
                                     <img src='https://cdn1.iconfinder.com/data/icons/facebook-ui/48/additional_icons-03-512.png' width="70%" title='Channel Uploda' />
                                 </div>
                                 @endif
-                                <img src="{{ $channel->image() }}" alt="Channel Icon" title="{{ $channel->name }}">
+                                <img src="{{ $channel->image() }}" alt="{{ $channel->name }}" title="{{ $channel->name }}">
                             </div>
                         </div>
 
